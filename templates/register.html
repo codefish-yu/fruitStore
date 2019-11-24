@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+
+{#    导入样式#}
+    <link rel="stylesheet" href="/static/css/style.css">
+
+</head>
+<body>
+    {#    导入jquery#}
+    <script src="/static/js/jquery.min.js"></script>
+{#    导入xhr代理#}
+    <script src="/static/js/common.js"></script>
+    {{ msg }}
+    <div id="login">
+        <div class="top">
+            <h3>会员注册</h3>
+        </div>
+        <div class="con">
+           <figure>
+              <img src="/static/imgs/huiyuan.jpg" alt="">
+           </figure>
+
+           <div class="log">
+               <form action="/index/register" method="post" onsubmit="return login();">
+                   <div>
+                       <label for="">手机号</label>
+                       <input class="txt" placeholder="请输入手机号" type="text" id="telephone" name="telephone">
+                   </div>
+                   <div>
+                       <label for="">密码</label>
+                       <input class="txt" placeholder="请输入密码" name="password" id="password" type="text">
+                   </div>
+                   <div>
+                       <label for="">用户名</label>
+                       <input class="txt" placeholder="请输入用户名" name="username" id="username" type="text">
+                   </div>
+                   <div>
+                       <label for="">邮箱</label>
+                       <input class="txt" placeholder="请输入邮箱" name="email" id="email" type="text">
+                   </div>
+                   <div>
+                       <label for=""></label>
+                       <input type="submit" class="btn" value="注册会员">
+                       <input id="log" type="button" class="btn" value="登录">
+                   </div>
+               </form>
+           </div>
+        </div>
+    </div>
+
+    <script src="/static/js/index.js"></script>
+
+    <!--{# 二步ajax完成异步验证用户名和注册#}-->
+<!--{#    <script>#}-->
+            <!--{#一步：封装成一个函数#}-->
+<!--{#            function checkupthone(){#}-->
+<!--{#            //用户名已存在 则返回true; 用户名可注册 返回false#}-->
+<!--{#            var res = false;#}-->
+<!--{#            //1.创建xhr#}-->
+<!--{#            var xhr = createXhr();#}-->
+<!--{#            //2.创建请求,要传查询字符串就先做一个url#}-->
+<!--{#            var url = '/index/check_register?telephone=' + $('#telephone').val();#}-->
+<!--{#            xhr.open('get', url, false);#}-->
+<!--{#            //3.设置回调#}-->
+<!--{#            xhr.onreadystatechange = function(){#}-->
+<!--{#                if (xhr.readyState == 4 && xhr.status == 200){#}-->
+<!--{#                    if(xhr.responseText == '1'){#}-->
+<!--{#                        res = true;#}-->
+<!--{#                        $('#show').html("该用户已存在");#}-->
+<!--{#                    }else{#}-->
+<!--{#                        $('#show').html("OK");#}-->
+<!--{#                        }#}-->
+<!--{#                    }#}-->
+<!--{#                }#}-->
+<!--{#            //4.发送请求#}-->
+<!--{#            xhr.send(null);#}-->
+<!--{#            return res#}-->
+<!--{#            }#}-->
+<!--{##}-->
+<!--{#        //焦点离开事件blur和点击事件，事件之间是相互独立的#}-->
+<!--{#        //匿名函数 var fn = (function(形参){})(实参)#}-->
+<!--{#        $(function(){#}-->
+<!--{##}-->
+<!--{#            $('#telephone').blur(function(){#}-->
+<!--{#                //二步:调用ajax#}-->
+<!--{#                checkupthone();#}-->
+<!--{#            });#}-->
+<!--{##}-->
+<!--{#            $('#register').click(function(){#}-->
+<!--{#                if(checkupthone()){#}-->
+<!--{#                    // checkupthone return true#}-->
+<!--{#                    alert('该用户已存在');#}-->
+<!--{#                    }#}-->
+<!--{#                });#}-->
+<!--{#            })#}-->
+<!--{#    </script>#}-->
+</body>
+</html>

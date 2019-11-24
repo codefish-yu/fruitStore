@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+     <!-- 导入样式 -->
+{#    需要将这个css文件放到静态文件下#}
+     <link rel="stylesheet" href="/static/css/style.css">
+
+</head>a
+<body>
+{#{{ msg }}#}
+
+    {#    导入jquery#}
+    <script src="/static/js/jquery.min.js"></script>
+{#    导入xhr代理#}
+    <script src="/static/js/common.js"></script>
+
+    <div id="login">
+        <div class="top">
+            <h3>会员登录</h3>
+        </div>
+        <div class="con">
+           <figure>
+              <img src="/static/imgs/huiyuan.jpg" alt="">
+           </figure>
+           <div class="log">
+               <form action="/index/login" method="post" onsubmit="return login();">
+                   <div>
+                       <label for="">用户名</label>
+                       <input class="txt" placeholder="请输入用户名" type="text" id="username" name="username">
+                       <span id="show1"></span>
+                   </div>
+                   <div>
+                       <label for="">密码</label>
+                       <input class="txt" placeholder="请输入密码" name="userpass" id="userpass" type="password">
+                       <span id="show2"></span>
+                   </div>
+                   <div>
+                       <label for=""></label>
+                       <input type="checkbox" name="save_cookies">记住密码
+                       <a class="a1" href="">忘记密码</a>
+                       <a href="">快捷登录</a>
+                   </div>
+                   <div>
+                       <label for=""></label>
+                       <input id="login" type="submit" class="btn" value="登录">
+                       <input id="log" type="button" class="btn" value="注册会员">
+                   </div>
+               </form>
+           </div>
+        </div>
+    </div>
+    <script src="/static/js/index.js"></script>
+
+    <script>
+            {#判断用户名是否存在封装成一个函数#}
+            function checkuname(){
+            //有该用户名，返回ok(false)，无该用户名，提示用户名不存在(true)
+            var res = false;
+            //1.创建xhr
+            var xhr = createXhr();
+            //2.创建请求,要传查询字符串就先做一个url
+            var url = '/index/check_username?username=' + $('#username').val();
+            xhr.open('get', url, false);
+            //3.设置回调
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState == 4 && xhr.status == 200){
+                    if(xhr.responseText == '1'){
+                        res = true
+                        $('#show1').html("用户名不正确");
+                    }else{
+                        $('#show1').html("");
+                        }
+                    }
+                }
+            //4.发送请求
+            xhr.send(null);
+            return res
+            }
+
+
+              {#判断密码是否正确封装成一个函数#}
+            function checkpassword(){
+            //密码不正确，返回0(false)，密码为空，返回１
+            var res = False;
+            //1.创建xhr
+            var xhr = createXhr();
+            //2.创建请求,要传查询字符串就先做一个url
+            var url = '/index/check_password?password=' + $('#userpass').val();
+            xhr.open('get', url, false);
+            //3.设置回调
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState == 4 && xhr.status == 200){
+                    if(xhr.responseText == '1'){
+                        res = True;
+                        $('#show2').html("密码不能为空");
+                    }else{
+                        $('#show2').html("用户名或密码不正确")
+                        }
+                    }
+                }
+
+            //4.发送请求
+            xhr.send(null);
+            return res
+            }
+
+        //焦点离开事件blur
+        //匿名函数 var fn = (function(形参){})(实参)
+        $(function(){
+            {#blur事件和click事件独立#}
+            $('#username').blur(function(){
+                //调用ajax
+                checkuname();
+            });
+
+            $('#login').click(function(){
+                if(checkuname()){
+                    // checkuname return true
+                    alert('用户名不正确');
+                }else{
+                    // checkuname return false
+                    //判断登录
+                    checkpassword();
+                    if(checkpassword()){
+                        alert('密码不能为空');
+                    }
+
+                    }
+                });
+            })
+    </script>
+</body>
+</html>
